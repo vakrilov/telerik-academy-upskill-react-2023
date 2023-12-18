@@ -1,5 +1,9 @@
 import { useMemo } from "react";
-import { useReducer } from "react";
+import { useCallback } from "react";
+import { useSyncExternalStore } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useRef } from "react";
 import { createContext, useContext } from "react";
 
 const AppState = createContext();
@@ -43,7 +47,24 @@ const appReducer = (state, action) => {
 };
 
 export const AppStateProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(appReducer, null, () => initialState);
+  // const [state, dispatch_internal] = useReducer(appReducer, null, () => initialState);
+  const state = useRef(initialState);
+  const dispatch = useCallback((action) => {
+    state.current = appReducer(state.current, action);
+    subscriptions.current.forEach((callback) => callback(state.current));
+  }, []);
+
+  const subscriptions = useRef([]);
+  const subscribe = useCallback((callback) => {
+    subscriptions.current.push(callback);
+    return () => {
+      subscriptions.current = subscriptions.current.filter(
+        (cb) => cb !== callback
+      );
+    };
+  }, []);
+
+  const getState = useCallback(() => state.current, []);
 
   const actions = useMemo(
     () => ({
@@ -58,8 +79,36 @@ export const AppStateProvider = ({ children }) => {
   );
 
   return (
-    <AppState.Provider value={{ state, actions }}>{children}</AppState.Provider>
+    <AppState.Provider value={{ getState, subscribe, actions }}>
+      {children}
+    </AppState.Provider>
   );
 };
-export const useAppState = () => useContext(AppState).state;
+
 export const useAppActions = () => useContext(AppState).actions;
+
+export const useAppSelector = (selector) => {
+  const { getState, subscribe } = useContext(AppState);
+  // const lastValue = useRef(selector(getState()));
+  // const [cachedState, setCachedState] = useState(selector(getState()));
+
+  // useEffect(() => {
+  //   console.log("Creating subscription");
+  //   subscribe((store) => {
+  //     const newState = selector(store);
+  //     if (newState !== lastValue.current) {
+  //       lastValue.current = newState;
+  //       setCachedState(newState);
+  //     }
+  //   });
+  // }, [selector, subscribe]);
+
+  const getSnapshot = useCallback(
+    () => selector(getState()),
+    [selector, getState]
+  );
+
+  const value = useSyncExternalStore(subscribe, getSnapshot);
+
+  return value;
+};

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useAppState, useAppActions } from "./AppStateProvider";
+import { useAppActions, useAppSelector } from "./AppStateProvider";
 
 const predefinedMessages = [
   "Hi, I'm a bot",
@@ -8,19 +8,23 @@ const predefinedMessages = [
   "What are you doing?",
   "I'm writing some code",
 ];
+const selectChatMessages = (state) => state.chatMessages;
 export const Chat = () => {
   console.log("Chat rendered");
 
-  const { chatMessages } = useAppState();
+  const chatMessages = useAppSelector(selectChatMessages);
   const { addChatMessage } = useAppActions();
 
   useEffect(() => {
     const timer = setInterval(() => {
       addChatMessage({
         id: Date.now(),
-        content: predefinedMessages[Math.floor(Math.random() * predefinedMessages.length)],
+        content:
+          predefinedMessages[
+            Math.floor(Math.random() * predefinedMessages.length)
+          ],
       });
-    }, 1000);
+    }, 1_000);
 
     return () => clearTimeout(timer);
   }, [addChatMessage]);
@@ -29,7 +33,7 @@ export const Chat = () => {
     <div className="panel">
       <h3>Chat</h3>
       <div className="panel">
-        {chatMessages.map(({ id, content }) => (
+        {chatMessages?.map(({ id, content }) => (
           <div className="msg" key={id}>
             {content}
           </div>

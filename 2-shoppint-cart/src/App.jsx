@@ -1,7 +1,7 @@
 import {
   AppStateProvider,
   useAppActions,
-  useAppState,
+  useAppSelector,
 } from "./AppStateProvider";
 import { Chat } from "./Chat";
 
@@ -18,9 +18,11 @@ export default function App() {
   );
 }
 
+const selectItems = (state) => state.items;
+
 const MainContent = () => {
   console.log("MainContent rendered");
-  const { items } = useAppState();
+  const items = useAppSelector(selectItems);
   const { addItemToCart, removeItemFromCart } = useAppActions();
 
   return (
@@ -32,7 +34,7 @@ const MainContent = () => {
             <div key={item.id}>
               <button onClick={() => removeItemFromCart(item)}>-</button>
               {item.name}
-              <button onClick={() => addItemToCart(item)} >+</button>
+              <button onClick={() => addItemToCart(item)}>+</button>
             </div>
           );
         })}
@@ -41,10 +43,11 @@ const MainContent = () => {
   );
 };
 
+const selectCart = (state) => state.cart;
 const ShoppingCart = () => {
   console.log("ShoppingCart rendered");
 
-  const { cart } = useAppState();
+  const cart = useAppSelector(selectCart);
 
   return (
     <div className="panel">
