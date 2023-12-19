@@ -1,24 +1,26 @@
-import { useAppStore } from "./AppStateProvider";
+import { AppStateProvider, useAppActions, useCart, useItems } from "./AppStateProvider";
 import { Chat } from "./Chat";
 
 export default function App() {
   return (
     <>
-      <h1>App</h1>
-      <div className="App">
-        <Chat />
-        <MainContent />
-        <ShoppingCart />
-      </div>
+      <AppStateProvider>
+        <h1>App</h1>
+        <div className="App">
+          <Chat />
+          <MainContent />
+          <ShoppingCart />
+        </div>
+      </AppStateProvider>
     </>
   );
 }
 
 const MainContent = () => {
   console.log("MainContent rendered");
-  const items = useAppStore((s) => s.items);
-  const addItemToCart = useAppStore((s) => s.addItemToCart);
-  const removeItemFromCart = useAppStore((s) => s.removeItemFromCart);
+  const items = useItems();
+  const addItemToCart = useAppActions.addItemToCart;
+  const removeItemFromCart = useAppActions.removeItemFromCart;
 
   return (
     <main className="panel">
@@ -41,7 +43,7 @@ const MainContent = () => {
 const ShoppingCart = () => {
   console.log("ShoppingCart rendered");
 
-  const cart = useAppStore((s) => s.cart);
+  const cart = useCart();
 
   return (
     <div className="panel">

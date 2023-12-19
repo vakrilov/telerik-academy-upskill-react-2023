@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useAppStore } from "./AppStateProvider";
+import { useAppActions, useChatMessages } from "./AppStateProvider";
 
 const predefinedMessages = [
   "Hi, I'm a bot",
@@ -8,20 +8,20 @@ const predefinedMessages = [
   "What are you doing?",
   "I'm writing some code",
 ];
+const getRandomMessage = () =>
+  predefinedMessages[Math.floor(Math.random() * predefinedMessages.length)];
+
 export const Chat = () => {
   console.log("Chat rendered");
 
-  const chatMessages = useAppStore((store) => store.chatMessages);
-  const addChatMessage = useAppStore((store) => store.addChatMessage);
+  const chatMessages = useChatMessages();
+  const addChatMessage = useAppActions().addChatMessage
 
   useEffect(() => {
     const timer = setInterval(() => {
       addChatMessage({
         id: Date.now(),
-        content:
-          predefinedMessages[
-            Math.floor(Math.random() * predefinedMessages.length)
-          ],
+        content: getRandomMessage(),
       });
     }, 1000);
 
