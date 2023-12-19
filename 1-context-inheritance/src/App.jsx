@@ -1,15 +1,6 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 const themeContext = createContext({ theme: "light" });
-
-// const ThemeProvider = ({ children }) => {
-//   const [theme, setTheme] = useState("light");
-//   return (
-//     <themeContext.Provider value={{ theme, setTheme }}>
-//       {children}
-//     </themeContext.Provider>
-//   );
-// };
 
 const App = () => {
   console.log("rendering app");
@@ -30,7 +21,6 @@ const App = () => {
 
 const SectionOne = () => {
   console.log("rendering section 1");
-
   const { theme } = useContext(themeContext);
 
   return (
