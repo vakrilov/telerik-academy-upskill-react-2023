@@ -1,13 +1,26 @@
+import { useEffect, useMemo } from "react";
 import { createContext, useContext, useState } from "react";
 
-const AppStateContext = createContext();
+const UserContext = createContext();
+const CountContext = createContext();
 
 const AppStateProvider = ({ children }) => {
-  const [user, setUser] = useState({ firstName: "John", lastName: "Doe" });
+  const [user] = useState({ firstName: "John", lastName: "Doe" });
+  const [countdown, setCountdown] = useState(1000);
+
+  useEffect(() => {
+    const interval = setInterval(() => setCountdown((c) => c - 1), 1000);
+    return () => clearInterval(interval);
+  }, [setCountdown]);
+
+  const userValue = useMemo(() => ({ user }), [user]);
+
   return (
-    <AppStateContext.Provider value={{ user, setUser }}>
-      {children}
-    </AppStateContext.Provider>
+    <UserContext.Provider value={userValue}>
+      <CountContext.Provider value={countdown}>
+        {children}
+      </CountContext.Provider>
+    </UserContext.Provider>
   );
 };
 
@@ -34,8 +47,8 @@ const Sidebar = () => {
 };
 
 const Profile = () => {
-  const { user } = useContext(AppStateContext);
   console.log("Profile rendered");
+  const { user } = useContext(UserContext);
   return (
     <div>
       Hi, {user.firstName} {user.lastName}!
@@ -55,8 +68,7 @@ const MainContent = () => {
 
 const Banner = () => {
   console.log("Banner rendered");
-
-  const countdown = 1000;
+  const countdown = useContext(CountContext);
 
   return <div>CountDown: {countdown}</div>;
 };
