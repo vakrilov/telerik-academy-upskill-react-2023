@@ -1,5 +1,8 @@
 import { useEffect } from "react";
-import { useAppActions, useChatMessages } from "./AppStateProvider";
+import {
+  useAppState,
+  useChatMessages,
+} from "./AppStateProvider";
 
 const predefinedMessages = [
   "Hi, I'm a bot",
@@ -15,7 +18,7 @@ export const Chat = () => {
   console.log("Chat rendered");
 
   const chatMessages = useChatMessages();
-  const addChatMessage = useAppActions().addChatMessage
+  const addChatMessage = useAppState((s) => s.addChatMessage);
 
   useEffect(() => {
     const timer = setInterval(() => {
