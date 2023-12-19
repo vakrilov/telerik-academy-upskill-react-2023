@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { useMemo } from "react";
 import { useReducer } from "react";
 import { createContext, useContext } from "react";
@@ -61,5 +62,9 @@ export const AppStateProvider = ({ children }) => {
     <AppState.Provider value={{ state, actions }}>{children}</AppState.Provider>
   );
 };
-export const useAppState = () => useContext(AppState).state;
+
 export const useAppActions = () => useContext(AppState).actions;
+
+export const useItems = () => useContext(AppState).state.items;
+export const useChatMessages = () => useContext(AppState).state.chatMessages;
+export const useCart = () => useContext(AppState).state.cart;

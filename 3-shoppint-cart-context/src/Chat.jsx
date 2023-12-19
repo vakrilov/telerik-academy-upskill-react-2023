@@ -1,5 +1,8 @@
 import { useEffect } from "react";
-import { useAppState, useAppActions } from "./AppStateProvider";
+import {
+  useAppActions,
+  useChatMessages,
+} from "./AppStateProvider";
 
 const predefinedMessages = ["Hi, I'm not a bot"];
 
@@ -9,7 +12,7 @@ const getRandomMessage = () =>
 export const Chat = () => {
   console.log("Chat rendered");
 
-  const { chatMessages } = useAppState();
+  const chatMessages = useChatMessages();
   const { addChatMessage } = useAppActions();
 
   useEffect(() => {
