@@ -5,7 +5,7 @@ import { createContext, useContext } from "react";
 const AppState = createContext();
 
 const initialState = {
-  chatMessages: [{ id: 0, content: "Hi there" }],
+  chatMessages: [{ id: 0, content: "Hello" }],
   items: [
     { id: 1, name: "Item 1", price: 10 },
     { id: 2, name: "Item 2", price: 20 },

@@ -1,13 +1,11 @@
 import { useEffect } from "react";
 import { useAppState, useAppActions } from "./AppStateProvider";
 
-const predefinedMessages = [
-  "Hi, I'm a bot",
-  "How are you?",
-  "I'm fine, thanks",
-  "What are you doing?",
-  "I'm writing some code",
-];
+const predefinedMessages = ["Hi, I'm not a bot"];
+
+const getRandomMessage = () =>
+  predefinedMessages[Math.floor(Math.random() * predefinedMessages.length)];
+
 export const Chat = () => {
   console.log("Chat rendered");
 
@@ -18,7 +16,7 @@ export const Chat = () => {
     const timer = setInterval(() => {
       addChatMessage({
         id: Date.now(),
-        content: predefinedMessages[Math.floor(Math.random() * predefinedMessages.length)],
+        content: getRandomMessage(),
       });
     }, 1000);
 
