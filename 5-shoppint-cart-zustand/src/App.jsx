@@ -1,17 +1,19 @@
-import { AppStateProvider, useAppActions, useCart, useItems } from "./AppStateProvider";
+import {
+  useAppState,
+  useCart,
+  useItems,
+} from "./AppStateProvider";
 import { Chat } from "./Chat";
 
 export default function App() {
   return (
     <>
-      <AppStateProvider>
-        <h1>App</h1>
-        <div className="App">
-          <Chat />
-          <MainContent />
-          <ShoppingCart />
-        </div>
-      </AppStateProvider>
+      <h1>App</h1>
+      <div className="App">
+        <Chat />
+        <MainContent />
+        <ShoppingCart />
+      </div>
     </>
   );
 }
@@ -19,8 +21,8 @@ export default function App() {
 const MainContent = () => {
   console.log("MainContent rendered");
   const items = useItems();
-  const addItemToCart = useAppActions.addItemToCart;
-  const removeItemFromCart = useAppActions.removeItemFromCart;
+  const addItemToCart = useAppState((s) => s.addItemToCart);
+  const removeItemFromCart = useAppState((s) => s.removeItemFromCart);
 
   return (
     <main className="panel">
