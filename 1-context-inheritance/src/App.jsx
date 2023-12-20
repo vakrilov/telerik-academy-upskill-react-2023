@@ -1,12 +1,22 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, memo, useContext, useMemo, useState } from "react";
 
 const themeContext = createContext({ theme: "light" });
+
+const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState("light");
+
+  const value = useMemo(() => ({ theme, setTheme }), [theme, setTheme]);
+
+  return (
+    <themeContext.Provider value={value}>{children}</themeContext.Provider>
+  );
+};
 
 const App = () => {
   console.log("rendering app");
   const [count, setCount] = useState(0);
   return (
-    <>
+    <ThemeProvider>
       <h1>Hi there</h1>
       <SectionOne />
       <SectionTwo />
@@ -15,11 +25,11 @@ const App = () => {
         <p>Count: {count}</p>
         <button onClick={() => setCount((c) => c + 1)}>Increment</button>
       </div>
-    </>
+    </ThemeProvider>
   );
 };
 
-const SectionOne = () => {
+const SectionOne = memo(() => {
   console.log("rendering section 1");
   const { theme } = useContext(themeContext);
 
@@ -29,9 +39,9 @@ const SectionOne = () => {
       <ThemeSwitcher />
     </div>
   );
-};
+});
 
-const SectionTwo = () => {
+const SectionTwo = memo(() => {
   console.log("rendering section 2");
   const { theme } = useContext(themeContext);
 
@@ -41,7 +51,7 @@ const SectionTwo = () => {
       <ThemeSwitcher />
     </div>
   );
-};
+});
 
 const ThemeSwitcher = () => {
   const { theme, setTheme } = useContext(themeContext);
