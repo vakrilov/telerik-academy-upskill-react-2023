@@ -1,8 +1,4 @@
-import {
-  useAppState,
-  useCart,
-  useItems,
-} from "./AppStateProvider";
+import { useAppState } from "./AppStateProvider";
 import { Chat } from "./Chat";
 
 export default function App() {
@@ -20,7 +16,7 @@ export default function App() {
 
 const MainContent = () => {
   console.log("MainContent rendered");
-  const items = useItems();
+  const items = useAppState((s) => s.items);
   const addItemToCart = useAppState((s) => s.addItemToCart);
   const removeItemFromCart = useAppState((s) => s.removeItemFromCart);
 
@@ -45,7 +41,7 @@ const MainContent = () => {
 const ShoppingCart = () => {
   console.log("ShoppingCart rendered");
 
-  const cart = useCart();
+  const cart = useAppState((s) => s.cart);
 
   return (
     <div className="panel">

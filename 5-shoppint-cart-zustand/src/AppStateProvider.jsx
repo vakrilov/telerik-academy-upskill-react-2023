@@ -32,8 +32,3 @@ export const useAppState = create((set) => ({
       },
     })),
 }));
-
-
-export const useItems = () => useAppState(s => s.items)
-export const useChatMessages = () => useAppState(s => s.chatMessages)
-export const useCart = () => useAppState(s => s.cart)
