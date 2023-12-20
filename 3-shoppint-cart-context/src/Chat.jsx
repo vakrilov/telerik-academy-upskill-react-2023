@@ -1,10 +1,14 @@
 import { useEffect } from "react";
-import {
-  useAppActions,
-  useChatMessages,
-} from "./AppStateProvider";
+import { useAppActions, useChatMessages } from "./AppStateProvider";
 
-const predefinedMessages = ["Hi, I'm not a bot"];
+const predefinedMessages = [
+  "Hi, I'm not a bot",
+  "How are you?",
+  "I'm fine, thanks",
+  "What are you doing?",
+  "I'm writing some code",
+  "I'm learning React",
+];
 
 const getRandomMessage = () =>
   predefinedMessages[Math.floor(Math.random() * predefinedMessages.length)];
