@@ -7,8 +7,9 @@ export const ShoppingCart = () => {
 
   const total = Object.keys(cart).reduce((total, id) => {
     const item = items.find((item) => item.id === id);
+    const price = item?.price || 0;
     const quantity = cart[id];
-    return total + item.price * quantity;
+    return total + price * quantity;
   }, 0);
 
   return (

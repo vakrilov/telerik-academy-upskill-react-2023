@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { reset } from "../../app/actions";
 
 const initialState = {};
 export const cartSlice = createSlice({
@@ -17,8 +18,9 @@ export const cartSlice = createSlice({
       } else if (currentQuantity > 1) {
         state[id] -= 1;
       }
-    }
+    },
   },
+  extraReducers: (builder) => builder.addCase(reset, () => initialState),
 });
 
 export const { addItemToCart, removeItemFromCart } = cartSlice.actions;
