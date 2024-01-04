@@ -1,9 +1,17 @@
 import { useSelector } from "react-redux";
 
+
+
 export const ShoppingCart = () => {
   console.log("ShoppingCart rendered");
   const cart = useSelector((s) => s.cart);
   const items = useSelector((s) => s.items);
+
+  const total = Object.keys(cart).reduce((total, id) => {
+    const item = items.find((item) => item.id === id);
+    const quantity = cart[id];
+    return total + item.price * quantity;
+  }, 0);
 
   return (
     <div className="panel">
@@ -23,6 +31,11 @@ export const ShoppingCart = () => {
             );
           }
         })}
+
+        <div key="total" className="cart-item total">
+          <span>Total:</span>
+          <span>${total.toFixed(2)}</span>
+        </div>
       </div>
     </div>
   );

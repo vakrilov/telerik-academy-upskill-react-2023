@@ -97,3 +97,9 @@ button:disabled {
   align-items: center;
 }
 
+.total {
+  align-self: flex-end;
+  text-align: end;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
