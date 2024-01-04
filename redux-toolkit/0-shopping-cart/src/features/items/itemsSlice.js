@@ -1,4 +1,4 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
 
 const initialState = [
   { id: "1", name: "Running shoes", price: 120 },
@@ -20,7 +20,23 @@ export const itemsSlice = createSlice({
       }
     ),
   }),
+  extraReducers: (builder) => {
+    builder.addCase(getItems.fulfilled, (state, action) => {
+      state.push(...action.payload);
+    });
+  },
+
 });
 
 export default itemsSlice.reducer;
 export const { addItem } = itemsSlice.actions;
+
+export const getItems = createAsyncThunk(
+  "items/getItems",
+  async (page, thunkAPI) => {
+    console.log("getItems", page);
+    const result = await thunkAPI.extra.fetchItems(page);
+    console.log("getItems result", result);
+    return result;
+  }
+);

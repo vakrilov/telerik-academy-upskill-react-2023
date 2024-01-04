@@ -6,6 +6,7 @@ import {
   persistStateMiddleware,
 } from "./persistStateMiddleware";
 import { resetStore } from "./action";
+import { awesomeApi } from "./api";
 
 const rootReducer = combineReducers({
   items: itemsReducer,
@@ -23,5 +24,9 @@ export const store = configureStore({
   preloadedState: getPersistedState(),
 
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(persistStateMiddleware.middleware),
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: awesomeApi,
+      }
+    }).concat(persistStateMiddleware.middleware),
 });
