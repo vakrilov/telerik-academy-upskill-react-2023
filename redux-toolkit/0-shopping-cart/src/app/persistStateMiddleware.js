@@ -14,6 +14,7 @@ export const persistStateMiddleware = createListenerMiddleware();
 persistStateMiddleware.startListening({
   matcher: (action) =>
     isAnyOf(action.type.startsWith(cartSlice.name), resetStore),
+    
   effect: (action, listenerAPI) => {
     const cart = listenerAPI.getState().cart;
 

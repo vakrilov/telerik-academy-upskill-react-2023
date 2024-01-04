@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { resetStore } from "../../app/action";
 
 const initialState = {};
 export const cartSlice = createSlice({
@@ -19,9 +18,6 @@ export const cartSlice = createSlice({
         state[id] -= 1;
       }
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(resetStore, () => initialState);
   },
 });
 
