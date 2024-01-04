@@ -32,7 +32,7 @@ body {
 
 button {
   border-radius: 8px;
-  border: 2px solid transparent;
+  border: 4px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1.25em;
   font-weight: 500;
@@ -52,7 +52,7 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 button:disabled {
-  opacity: 0.5;
+  opacity: 0.2;
   cursor: not-allowed;
 }
 
