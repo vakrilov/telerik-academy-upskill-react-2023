@@ -1,5 +1,4 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
-import { reset } from "../../app/actions";
 
 const initialState = [
   { id: "1", name: "Running shoes", price: 120 },
@@ -21,7 +20,6 @@ export const itemsSlice = createSlice({
       }
     ),
   }),
-  extraReducers: (builder) => builder.addCase(reset, () => initialState),
 });
 
 export default itemsSlice.reducer;

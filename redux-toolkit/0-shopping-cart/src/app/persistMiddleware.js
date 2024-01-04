@@ -1,12 +1,13 @@
-import { createListenerMiddleware } from "@reduxjs/toolkit";
+import { createListenerMiddleware, isAnyOf } from "@reduxjs/toolkit";
 import { cartSlice } from "../features/shopping-cart/shoppingCartSlice";
+import { reset } from "./actions";
 
 const LocalStoreKey = "cart";
 
 export const persistMiddleware = createListenerMiddleware();
 
 persistMiddleware.startListening({
-  matcher: (action) => action.type.startsWith(cartSlice.name),
+  matcher: isAnyOf((action) => action.type.startsWith(cartSlice.name), reset),
   effect: (action, listenerApi) => {
     console.log("persistMiddleware", action);
     localStorage.setItem(

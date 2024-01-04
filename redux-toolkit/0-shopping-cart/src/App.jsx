@@ -2,8 +2,8 @@ import { useDispatch } from "react-redux";
 import { ItemsList } from "./features/items/ItemsList";
 import { ShoppingCart } from "./features/shopping-cart/ShoppingCart";
 import { useCallback } from "react";
-import { reset } from "./app/actions";
 import { addItem } from "./features/items/itemsSlice";
+import { reset } from "./app/actions";
 
 export default function App() {
   const dispatch = useDispatch();
