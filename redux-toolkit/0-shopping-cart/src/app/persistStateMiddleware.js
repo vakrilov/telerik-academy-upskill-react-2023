@@ -1,5 +1,6 @@
-import { createListenerMiddleware } from "@reduxjs/toolkit";
+import { createListenerMiddleware, isAnyOf } from "@reduxjs/toolkit";
 import { cartSlice } from "../features/shopping-cart/shoppingCartSlice";
+import { resetStore } from "./action";
 
 const key = "_AppState_";
 
@@ -11,9 +12,9 @@ export const getPersistedState = () => {
 export const persistStateMiddleware = createListenerMiddleware();
 
 persistStateMiddleware.startListening({
-  matcher: (action) => action.type.startsWith(cartSlice.name),
+  matcher: (action) =>
+    isAnyOf(action.type.startsWith(cartSlice.name), resetStore),
   effect: (action, listenerAPI) => {
-    console.log("persistStateMiddleware", action);
     const cart = listenerAPI.getState().cart;
 
     localStorage.setItem(key, JSON.stringify({ cart }));
