@@ -1,8 +1,9 @@
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { configureStore, combineReducers, nanoid } from "@reduxjs/toolkit";
 import itemsReducer from "../features/items/itemsSlice";
 import { cartSlice } from "../features/shopping-cart/shoppingCartSlice";
 import { persistMiddleware, getPersistedState } from "./persistMiddleware";
 import { reset } from "./actions";
+import { awesomeAPI } from "./api";
 
 
 const rootReducer = combineReducers({
@@ -19,6 +20,10 @@ export const store = configureStore({
   reducer: rootResettableReducer,
   devTools: true,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().prepend(persistMiddleware.middleware),
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: awesomeAPI,
+      },
+    }).prepend(persistMiddleware.middleware),
   preloadedState: getPersistedState(),
 });

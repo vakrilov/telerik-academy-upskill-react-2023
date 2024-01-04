@@ -1,18 +1,19 @@
 import { useDispatch } from "react-redux";
 import { ItemsList } from "./features/items/ItemsList";
 import { ShoppingCart } from "./features/shopping-cart/ShoppingCart";
-import { useCallback } from "react";
-import { addItem } from "./features/items/itemsSlice";
+import { useCallback, useState } from "react";
+import { fetchItemsFromAPI } from "./features/items/itemsSlice";
 import { reset } from "./app/actions";
 
 export default function App() {
   const dispatch = useDispatch();
+  const [page, setPage] = useState(1);
 
   const handleReset = useCallback(() => dispatch(reset()), [dispatch]);
-  const handleAdd = useCallback(
-    () => dispatch(addItem({ name: "Something Else", price: 600 })),
-    [dispatch]
-  );
+  const handleAdd = useCallback(async () => {
+    await dispatch(fetchItemsFromAPI(page));
+    setPage((p) => p + 1);
+  }, [page, dispatch]);
 
   return (
     <>
