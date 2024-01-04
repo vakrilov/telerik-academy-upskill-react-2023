@@ -1,7 +1,5 @@
 import { useSelector } from "react-redux";
 
-
-
 export const ShoppingCart = () => {
   console.log("ShoppingCart rendered");
   const cart = useSelector((s) => s.cart);

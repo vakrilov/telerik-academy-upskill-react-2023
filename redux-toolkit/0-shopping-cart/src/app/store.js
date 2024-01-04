@@ -1,11 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import itemsReducer from "../features/items/itemsSlice";
-import cartReducer from "../features/shopping-cart/shoppingCartSlice";
+import { cartSlice } from "../features/shopping-cart/shoppingCartSlice";
+import { persistMiddleware, getPersistedState } from "./persistMiddleware";
 
 export const store = configureStore({
   reducer: {
     items: itemsReducer,
-    cart: cartReducer,
+    cart: cartSlice.reducer,
   },
   devTools: true,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().prepend(persistMiddleware.middleware),
+  preloadedState: getPersistedState(),
 });
