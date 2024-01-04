@@ -12,7 +12,7 @@ export const ItemsList = () => {
   return (
     <main className="panel">
       <h3>Items List</h3>
-      <div className="panel">
+      <div className="panel items-list">
         {items.map((item) => {
           const disableRemove = !cart[item.id];
           return (

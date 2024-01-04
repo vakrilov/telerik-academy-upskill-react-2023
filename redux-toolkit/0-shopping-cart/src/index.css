@@ -77,10 +77,18 @@ button:disabled {
   margin: 0.5rem;
 }
 
+.items-list{
+  width: 400px;
+}
+
 .item {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.cart {
+  width: 300px;
 }
 
 .cart-item {
@@ -88,3 +96,4 @@ button:disabled {
   justify-content: space-between;
   align-items: center;
 }
+
